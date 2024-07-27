@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import prisma from "../db/prisma.js";
-import { getReceiverSocketId, io, pub, sub } from "../socket/socket.js";
+import { getReceiverSocketId, io } from "../socket/socket.js";
 
 // interface SocketMessage {
 //     userId: string;
@@ -61,7 +61,7 @@ export const sendMessage = async (req: Request, res: Response) => {
 		//const msg:string = JSON.stringify(message);
 		
 
-		await pub.publish("MESSAGES", JSON.stringify({newMessage , receiverId}));
+		// await pub.publish("MESSAGES", JSON.stringify({newMessage , receiverId}));
 
 		// sub.on("message",(channel, message) => {
 		// 	if(channel === "MESSAGES") {
@@ -82,12 +82,12 @@ export const sendMessage = async (req: Request, res: Response) => {
 		// redis part END
 
 		// socket io normal part START
-		// const receiverSocketId = getReceiverSocketId(receiverId);
+		const receiverSocketId = getReceiverSocketId(receiverId);
 
-		// if (receiverSocketId) {
-		// 	io.to(receiverSocketId).emit("newMessage", newMessage);
+		if (receiverSocketId) {
+			io.to(receiverSocketId).emit("newMessage", newMessage);
 
-		// }
+		}
 		
 		res.status(201).json(newMessage);
 		//socket io normal part END 
