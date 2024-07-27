@@ -37,6 +37,4 @@ jobs:
         key: ${{ secrets.SSH_KEY }}
         script: |
           sudo docker pull chaitanyauniyal75658/mydocker_images:latest
-          sudo docker stop web-app || true
-          sudo docker rm web-app || true
-          sudo docker run -d --name web-app -p 3000:5000 chaitanyauniyal75658/mydocker_images:latest
+          sudo docker run -d -p 3000:5000 chaitanyauniyal75658/mydocker_images:latest
