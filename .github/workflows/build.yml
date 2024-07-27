@@ -1,9 +1,13 @@
 name: Build on PR
 
 on:
+  push:
+    branches:
+      - '**'  # Triggers on push to any branch
   pull_request:
     branches:
-      - master
+      - master  # Triggers on pull request to the master branch
+
 
 jobs:
   build:
