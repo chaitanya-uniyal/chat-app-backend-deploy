@@ -37,4 +37,4 @@ jobs:
         key: ${{ secrets.SSH_KEY }}
         script: |
           sudo docker pull chaitanyauniyal75658/mydocker_images:latest
-          sudo docker run -d --name chat-app -p 3000:5000 chaitanyauniyal75658/mydocker_images:latest
+          sudo docker run -d --name web-app -p 3000:5000 chaitanyauniyal75658/mydocker_images:latest
