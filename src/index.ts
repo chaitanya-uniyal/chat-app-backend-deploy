@@ -1,10 +1,4 @@
 
-
-
-
-
-//testing the changes for the workflows
-
 import express from 'express';
 import authRoutes from "./routes/auth.route.js";
 import messageRoutes from "./routes/message.route.js";
