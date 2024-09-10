@@ -94,8 +94,8 @@ jobs:
           sudo docker rm web-app || true
           sudo docker run -d --name web-app -p 80:5000 \
             -e DATABASE_URL=${{ secrets.DATABASE_URL }} \
-            -e JWT_SECRET=${{ secrets.JWT_SECRET}} \
-            -e REDIS_HOST=${{ secrets.REDIS_HOST}} \
-            -e REDIS_PASSWORD=${{ secrets.REDIS_PASSWORD}} \
-            -e REDIS_USERNAME=${{ secrets.REDIS_USERNAME}} \
+            -e JWT_SECRET=${{ secrets.JWT_SECRET }} \
+            -e REDIS_HOST=${{ secrets.REDIS_HOST }} \
+            -e REDIS_PASSWORD=${{ secrets.REDIS_PASSWORD }} \
+            -e REDIS_USERNAME=${{ secrets.REDIS_USERNAME }} \
             chaitanyauniyal75658/mydocker_images:latest
