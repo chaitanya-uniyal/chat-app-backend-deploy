@@ -15,6 +15,9 @@ export const signup = async (req: Request, res: Response) => {
 			return res.status(400).json({ error: "Passwords don't match" });
 		}
 
+
+
+		
 		const user = await prisma.user.findUnique({ where: { username } });
 
 		if (user) {
