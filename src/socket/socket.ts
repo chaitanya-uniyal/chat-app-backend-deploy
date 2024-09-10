@@ -11,14 +11,14 @@ dotenv.config();
 
 const pub =  new Redis({
 	host: process.env.REDIS_HOST,
-    port: 17563,
+    port: 17562,
 	username: process.env.REDIS_USERNAME,
 	password: process.env.REDIS_PASSWORD,
 
 });
 const sub =  new Redis({
 	host: process.env.REDIS_HOST,
-    port: 17563,
+    port: 17562,
 	username: process.env.REDIS_USERNAME,
 	password: process.env.REDIS_PASSWORD,
 
