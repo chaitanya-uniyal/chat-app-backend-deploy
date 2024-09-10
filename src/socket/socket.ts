@@ -23,18 +23,33 @@ dotenv.config();
 // 	password: process.env.REDIS_PASSWORD,
 
 // });
-
 const app = express();
-app.use(cors());
+const corsOptions = {
+    origin: "*", // Or specify your frontend's URL for tighter security
+    methods: ["GET", "POST"],
+    credentials: true,
+    allowedHeaders: ["Content-Type", "Authorization"] // Ensure your headers match what's being sent
+};
+
+app.use(cors(corsOptions));
+
 const server = http.createServer(app);
 const io = new Server(server, {
-	cors: {
-		origin: "*",
-		credentials: true,
-		methods: ["GET", "POST"],
-	},
+    cors: corsOptions
 });
 
+// ############################################################commented this but its working ###################
+// const app = express();
+// app.use(cors());
+// const server = http.createServer(app);
+// const io = new Server(server, {
+// 	cors: {
+// 		origin: "*",
+// 		credentials: true,
+// 		methods: ["GET", "POST"],
+// 	},
+// });
+// ################################################################################################################
 // sub.subscribe("MESSAGES");
 // sub.on("message",(channel, message) => {
 // 	if(channel === "MESSAGES") {
