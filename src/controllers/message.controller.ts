@@ -63,21 +63,6 @@ export const sendMessage = async (req: Request, res: Response) => {
 
 		await pub.publish("MESSAGES", JSON.stringify({newMessage , receiverId}));
 
-		sub.on("message",(channel, message) => {
-			if(channel === "MESSAGES") {
-
-				const parsedMessage = JSON.parse(message);
-    			const { newMessage, receiverId } = parsedMessage;
-				console.log(newMessage);
-				console.log(receiverId);
-				const receiverSocketId = getReceiverSocketId(receiverId);
-				if (receiverSocketId) {
-					io.to(receiverSocketId).emit("newMessage", newMessage);
-		
-				}
-
-			}
-		})
 
 		// redis part END
 
