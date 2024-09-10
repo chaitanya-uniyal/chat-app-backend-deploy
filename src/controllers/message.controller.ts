@@ -1,11 +1,11 @@
 import { Request, Response } from "express";
 import prisma from "../db/prisma.js";
-import { getReceiverSocketId, io } from "../socket/socket.js";
+import { getReceiverSocketId, io, pub, sub } from "../socket/socket.js";
 
-// interface SocketMessage {
-//     userId: string;
-//     message: string;
-// }
+interface SocketMessage {
+    userId: string;
+    message: string;
+}
 
 export const sendMessage = async (req: Request, res: Response) => {
 	try {
@@ -58,38 +58,38 @@ export const sendMessage = async (req: Request, res: Response) => {
 		// Socket io will go here
 
 		//redis publish
-		//const msg:string = JSON.stringify(message);
+		const msg:string = JSON.stringify(message);
 		
 
-		// await pub.publish("MESSAGES", JSON.stringify({newMessage , receiverId}));
+		await pub.publish("MESSAGES", JSON.stringify({newMessage , receiverId}));
 
-		// sub.on("message",(channel, message) => {
-		// 	if(channel === "MESSAGES") {
+		sub.on("message",(channel, message) => {
+			if(channel === "MESSAGES") {
 
-		// 		const parsedMessage = JSON.parse(message);
-    	// 		const { newMessage, receiverId } = parsedMessage;
-		// 		console.log(newMessage);
-		// 		console.log(receiverId);
-		// 		const receiverSocketId = getReceiverSocketId(receiverId);
-		// 		if (receiverSocketId) {
-		// 			io.to(receiverSocketId).emit("newMessage", newMessage);
+				const parsedMessage = JSON.parse(message);
+    			const { newMessage, receiverId } = parsedMessage;
+				console.log(newMessage);
+				console.log(receiverId);
+				const receiverSocketId = getReceiverSocketId(receiverId);
+				if (receiverSocketId) {
+					io.to(receiverSocketId).emit("newMessage", newMessage);
 		
-		// 		}
+				}
 
-		// 	}
-		// })
+			}
+		})
 
 		// redis part END
 
 		// socket io normal part START
-		const receiverSocketId = getReceiverSocketId(receiverId);
+		// const receiverSocketId = getReceiverSocketId(receiverId);
 
-		if (receiverSocketId) {
-			io.to(receiverSocketId).emit("newMessage", newMessage);
+		// if (receiverSocketId) {
+		// 	io.to(receiverSocketId).emit("newMessage", newMessage);
 
-		}
+		// }
 		
-		res.status(201).json(newMessage);
+		// res.status(201).json(newMessage);
 		//socket io normal part END 
 	} catch (error: any) {
 		console.error("Error in sendMessage: ", error.message);

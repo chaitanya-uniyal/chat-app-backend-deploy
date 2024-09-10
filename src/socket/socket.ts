@@ -9,20 +9,20 @@ import cors from "cors";
 dotenv.config();
 
 
-// const pub =  new Redis({
-// 	host: process.env.REDIS_HOST,
-//     port: 17562,
-// 	username: process.env.REDIS_USERNAME,
-// 	password: process.env.REDIS_PASSWORD,
+const pub =  new Redis({
+	host: process.env.REDIS_HOST,
+    port: 17563,
+	username: process.env.REDIS_USERNAME,
+	password: process.env.REDIS_PASSWORD,
 
-// });
-// const sub =  new Redis({
-// 	host: process.env.REDIS_HOST,
-//     port: 17562,
-// 	username: process.env.REDIS_USERNAME,
-// 	password: process.env.REDIS_PASSWORD,
+});
+const sub =  new Redis({
+	host: process.env.REDIS_HOST,
+    port: 17563,
+	username: process.env.REDIS_USERNAME,
+	password: process.env.REDIS_PASSWORD,
 
-// });
+});
 const app = express();
 const corsOptions = {
     origin: "*", // Or specify your frontend's URL for tighter security
@@ -50,22 +50,22 @@ const io = new Server(server, {
 // 	},
 // });
 // ################################################################################################################
-// sub.subscribe("MESSAGES");
-// sub.on("message",(channel, message) => {
-// 	if(channel === "MESSAGES") {
+sub.subscribe("MESSAGES");
+sub.on("message",(channel, message) => {
+	if(channel === "MESSAGES") {
 
-// 		const parsedMessage = JSON.parse(message);
-// 		const { newMessage, receiverId } = parsedMessage;
-// 		console.log(newMessage);
-// 		console.log(receiverId);
-// 		const receiverSocketId = getReceiverSocketId(receiverId);
-// 		if (receiverSocketId) {
-// 			io.to(receiverSocketId).emit("newMessage", newMessage);
+		const parsedMessage = JSON.parse(message);
+		const { newMessage, receiverId } = parsedMessage;
+		console.log(newMessage);
+		console.log(receiverId);
+		const receiverSocketId = getReceiverSocketId(receiverId);
+		if (receiverSocketId) {
+			io.to(receiverSocketId).emit("newMessage", newMessage);
 
-// 		}
+		}
 
-// 	}
-// })
+	}
+})
 
 
 export const getReceiverSocketId = (receiverId: string) => {
@@ -94,4 +94,5 @@ io.on("connection", (socket) => {
 
 
 
-export { app, io, server };
+// export { app, io, server };
+export { app, io, server,sub,pub };
