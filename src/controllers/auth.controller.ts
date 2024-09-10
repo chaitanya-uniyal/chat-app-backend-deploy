@@ -15,9 +15,6 @@ export const signup = async (req: Request, res: Response) => {
 			return res.status(400).json({ error: "Passwords don't match" });
 		}
 
-
-
-		
 		const user = await prisma.user.findUnique({ where: { username } });
 
 		if (user) {
@@ -65,18 +62,6 @@ export const login = async (req: Request, res: Response) => {
 		const { username, password } = req.body;
 		const user = await prisma.user.findUnique({ where: { username } });
 
-
-
-
-
-
-
-
-
-
-
-
-		
 		if (!user) {
 			return res.status(400).json({ error: "Invalid credentials" });
 		}
