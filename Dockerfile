@@ -23,6 +23,8 @@ RUN yarn install
 # Generate Prisma client based on the provided DATABASE_URL
 RUN yarn prisma generate
 
+RUN yarn prisma migrate dev --name Initialize the schema
+
 # Copy the rest of the application code
 COPY . .
 
