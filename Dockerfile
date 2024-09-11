@@ -21,7 +21,7 @@ ENV REDIS_PASSWORD=""
 RUN yarn install
 
 # Generate Prisma client based on the provided DATABASE_URL
-RUN yarn prisma migrate dev --name Initialize the schema
+RUN yarn prisma migrate dev --name Initialize
 
 RUN yarn prisma generate
 
