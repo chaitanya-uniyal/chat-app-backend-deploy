@@ -11,6 +11,8 @@ export const signup = async (req: Request, res: Response) => {
 			return res.status(400).json({ error: "Please fill in all fields" });
 		}
 
+		
+
 		if (password !== confirmPassword) {
 			return res.status(400).json({ error: "Passwords don't match" });
 		}
